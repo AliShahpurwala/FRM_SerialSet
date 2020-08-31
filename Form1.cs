@@ -51,10 +51,25 @@ namespace FRM_SerialSet
 
             Button promptOK = new Button() { Text = "OK", Top = 200, Left = 120 };
             Button promptCancel = new Button() { Text = "Cancel", Top = 200, Left = 200 };
-            
-            
+
+            string comport, parity, baud, stopBit;
             promptOK.Click += (sender1, e1) => {
-                connectionDetails.Close();
+                comport = comportInput.Text;
+                parity = parityInput.Text;
+                baud = baudInput.Text;
+                stopBit = stopBitInput.Text;
+
+                int errorStatus = verifySerialCommSettingInput(comport, baud, parity, stopBit);
+
+                if (errorStatus != 100)
+                {
+                    MessageBox.Show(humanReadableErrorMessage(errorStatus));
+                }
+                else
+                {
+                    connectionDetails.Close();
+                }
+                
             };
             promptCancel.Click += (sender1, e1) => {
                 connectionDetails.Close();
@@ -74,6 +89,25 @@ namespace FRM_SerialSet
             
             
             
+        }
+
+        private int verifySerialCommSettingInput(string comport, string baud, string parity, string stopBit)
+        {
+            parity = parity.Trim();
+            if (parity.ToLower() != "odd" && parity.ToLower() != "even")
+            {
+                return 150;
+            }
+            return 100;
+        }
+
+        private string humanReadableErrorMessage(int errorCode)
+        {
+            if (errorCode == 150)
+            {
+                return "Error 150: Parity can only be either odd or even.";
+            }
+            return "TODO: Implement Function";
         }
     }
 
