@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Ports;
 
 namespace FRM_SerialSet
 {
-    
+
     public partial class Form1 : Form
     {
-        connectionStatus ConnectionStatus = new connectionStatus();
         public Form1()
         {
             InitializeComponent();
@@ -30,15 +30,16 @@ namespace FRM_SerialSet
             MessageBox.Show("Enter the start read location in the textbox");
         }
 
+        #region Connection Details Rendering
         private void connectButton_Click(object sender, EventArgs e)
         {
             Form connectionDetails = new Form();
             connectionDetails.Height = 300;
             connectionDetails.Width = 300;
             connectionDetails.Text = "Connection Details";
-            
+
             Label comportInputLabel = new Label() { Top = 20, Left = 20, Text = "Comport" };
-            TextBox comportInput = new TextBox() { Top = 20, Left = 120};
+            TextBox comportInput = new TextBox() { Top = 20, Left = 120 };
 
             Label baudInputLabel = new Label() { Top = 50, Left = 20, Text = "Baud" };
             TextBox baudInput = new TextBox() { Top = 50, Left = 120 };
@@ -67,9 +68,33 @@ namespace FRM_SerialSet
                 }
                 else
                 {
+                    Parity par = Parity.None;
+                    if (parity.Trim() == "odd")
+                    {
+                        par = Parity.Odd;
+                    }
+                    else if (parity.Trim() == "even")
+                    {
+                        par = Parity.Even;
+                    }
+                    comport = "COM" + comport.Trim();
+                    StopBits stopB = StopBits.None;
+                    if (stopBit.Trim() == "1")
+                    {
+                        stopB = StopBits.One;
+                    }
+                    else if (stopBit.Trim() == "2")
+                    {
+                        stopB = StopBits.Two;
+                    }
+
+                    serialPort1.BaudRate = Int32.Parse(baud);
+                    serialPort1.Parity = par;
+                    serialPort1.StopBits = stopB;
+
                     connectionDetails.Close();
                 }
-                
+
             };
             promptCancel.Click += (sender1, e1) => {
                 connectionDetails.Close();
@@ -86,52 +111,73 @@ namespace FRM_SerialSet
             connectionDetails.Controls.Add(promptCancel);
             connectionDetails.ShowDialog();
 
-            
-            
-            
+
+
+
         }
+
 
         private int verifySerialCommSettingInput(string comport, string baud, string parity, string stopBit)
         {
+            
+            comport = comport.Trim();
+            if (comport != "1" && comport != "2" && comport != "3")
+            {
+                return 200;
+            }
             parity = parity.Trim();
             if (parity.ToLower() != "odd" && parity.ToLower() != "even")
             {
                 return 150;
             }
+            stopBit = stopBit.Trim();
+            if (stopBit != "1" && stopBit != "2" && stopBit != "3")
+            {
+                return 250;
+            }
             return 100;
         }
-
+        #endregion
         private string humanReadableErrorMessage(int errorCode)
         {
             if (errorCode == 150)
             {
                 return "Error 150: Parity can only be either odd or even.";
             }
-            return "TODO: Implement Function";
+            else if (errorCode == 200)
+            {
+                return "Error 200: Comport must be either 1, 2 or 3.";
+            }
+            else if (errorCode == 250)
+            {
+                return "Error 250: Stop Bit must be either 1, 2 or 3.";
+            }
+            return "No Error Found!";
+        }
+
+
+
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void generateCommCode_Click(object sender, EventArgs e)
+        {
+            String startReadLocation = this.NameInput.Text;
+            String readRangeInput = this.readDataRange.Text;
+            SerialComm mySerialCode = new SerialComm(startReadLocation, readRangeInput);
+            this.generatedCommCodeLabel.Text = mySerialCode.result();
+            this.generatedCommCodeLabel.BorderStyle = BorderStyle.FixedSingle;
+            
         }
     }
 
-    public class connectionStatus
-    {
-        bool status;
 
-        public connectionStatus()
-        {
-            this.status = false;
-        }
 
-        private void changeStatus()
-        {
-            if (this.status == false)
-            {
-                this.status = true;
-            }
-            else
-            {
-                this.status = false;
-            }
-        }
-    }
+
 
     #region Serial Communication Class - User Defined
     class SerialComm

@@ -28,12 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.NameInput = new System.Windows.Forms.TextBox();
             this.OK = new System.Windows.Forms.Button();
             this.readLocationLabel = new System.Windows.Forms.Label();
             this.readDataRangeLabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.readDataRange = new System.Windows.Forms.TextBox();
             this.connectButton = new System.Windows.Forms.Button();
+            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.generateCommCode = new System.Windows.Forms.Button();
+            this.generatedCommCodeLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // NameInput
@@ -72,12 +76,12 @@
             this.readDataRangeLabel.TabIndex = 3;
             this.readDataRangeLabel.Text = "Read Data Range";
             // 
-            // textBox1
+            // readDataRange
             // 
-            this.textBox1.Location = new System.Drawing.Point(141, 79);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(149, 20);
-            this.textBox1.TabIndex = 4;
+            this.readDataRange.Location = new System.Drawing.Point(141, 79);
+            this.readDataRange.Name = "readDataRange";
+            this.readDataRange.Size = new System.Drawing.Size(149, 20);
+            this.readDataRange.TabIndex = 4;
             // 
             // connectButton
             // 
@@ -89,19 +93,41 @@
             this.connectButton.UseVisualStyleBackColor = true;
             this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
+            // generateCommCode
+            // 
+            this.generateCommCode.Location = new System.Drawing.Point(141, 127);
+            this.generateCommCode.Name = "generateCommCode";
+            this.generateCommCode.Size = new System.Drawing.Size(96, 25);
+            this.generateCommCode.TabIndex = 6;
+            this.generateCommCode.Text = "Generate Code";
+            this.generateCommCode.UseVisualStyleBackColor = true;
+            this.generateCommCode.Click += new System.EventHandler(this.generateCommCode_Click);
+            // 
+            // generatedCommCodeLabel
+            // 
+            this.generatedCommCodeLabel.AutoSize = true;
+            this.generatedCommCodeLabel.Location = new System.Drawing.Point(41, 185);
+            this.generatedCommCodeLabel.Name = "generatedCommCodeLabel";
+            this.generatedCommCodeLabel.Size = new System.Drawing.Size(0, 13);
+            this.generatedCommCodeLabel.TabIndex = 7;
+            this.generatedCommCodeLabel.UseMnemonic = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.generatedCommCodeLabel);
+            this.Controls.Add(this.generateCommCode);
             this.Controls.Add(this.connectButton);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.readDataRange);
             this.Controls.Add(this.readDataRangeLabel);
             this.Controls.Add(this.readLocationLabel);
             this.Controls.Add(this.OK);
             this.Controls.Add(this.NameInput);
             this.Name = "Form1";
             this.Text = "Serial Connection";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -113,8 +139,11 @@
         private System.Windows.Forms.Button OK;
         private System.Windows.Forms.Label readLocationLabel;
         private System.Windows.Forms.Label readDataRangeLabel;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox readDataRange;
         private System.Windows.Forms.Button connectButton;
+        private System.IO.Ports.SerialPort serialPort1;
+        private System.Windows.Forms.Button generateCommCode;
+        private System.Windows.Forms.Label generatedCommCodeLabel;
     }
 }
 
