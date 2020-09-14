@@ -108,13 +108,17 @@ namespace FRM_SerialSet
                     else
                     {
                         Parity par = Parity.None;
-                        if (parity.Trim() == "odd")
+                        if (parity.Trim() == "Odd")
                         {
                             par = Parity.Odd;
                         }
-                        else if (parity.Trim() == "even")
+                        else if (parity.Trim() == "Even")
                         {
                             par = Parity.Even;
+                        }
+                        else if (parity.Trim() == "None")
+                        {
+                            par = Parity.None;
                         }
                         
                         StopBits stopB = StopBits.None;
@@ -159,7 +163,7 @@ namespace FRM_SerialSet
         private int verifySerialCommSettingInput(string comport, string baud, string parity, string stopBit)
         {
             parity = parity.Trim();
-            if (parity.ToLower() != "odd" && parity.ToLower() != "even")
+            if (parity.ToLower() != "odd" && parity.ToLower() != "even" && parity.ToLower() != "none")
             {
                 return 150;
             }
