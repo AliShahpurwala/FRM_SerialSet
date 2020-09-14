@@ -219,6 +219,16 @@ namespace FRM_SerialSet
 
         }
 
+        
+
+        private void serialPort_dataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            serialPort1.NewLine = "*";
+            string s = serialPort1.ReadLine();
+            MessageBox.Show(s);
+            
+        }
+
         private void updateCommDetailMainForm()
         {
             this.comportLabel.Text = serialPort1.PortName;
@@ -229,6 +239,7 @@ namespace FRM_SerialSet
             try
             {
                 serialPort1.Open();
+                serialPort1.DataReceived += new SerialDataReceivedEventHandler(serialPort_dataReceived);
                 this.connectButton.Text = "Disconnect";
                 
             }
@@ -239,6 +250,8 @@ namespace FRM_SerialSet
 
             this.connectionProgressBar.Value = 100;
         }
+
+        
     }
 
 
