@@ -25,8 +25,22 @@ namespace FRM_SerialSet
 
         private void OK_Click(object sender, EventArgs e)
         {
-            String givenName = this.NameInput.Text;
-            MessageBox.Show(givenName);
+            if (!serialPort1.IsOpen)
+            {
+                MessageBox.Show("The Serial Port has not been connected yet.");
+            }
+            else
+            {
+                if (globalSerialCode.result() == "@00RD*\n")
+                {
+                    MessageBox.Show("You have not created the query string as yet.");
+                }
+                else
+                {
+                    serialPort1.Write(globalSerialCode.result());
+
+                }
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
