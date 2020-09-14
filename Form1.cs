@@ -19,6 +19,8 @@ namespace FRM_SerialSet
             InitializeComponent();
         }
 
+        SerialComm globalSerialCode = new SerialComm();
+
         private void OK_Click(object sender, EventArgs e)
         {
             String givenName = this.NameInput.Text;
@@ -33,89 +35,94 @@ namespace FRM_SerialSet
         #region Connection Details Rendering
         private void connectButton_Click(object sender, EventArgs e)
         {
-            Form connectionDetails = new Form();
-            connectionDetails.Height = 300;
-            connectionDetails.Width = 300;
-            connectionDetails.Text = "Connection Details";
+            if (serialPort1.IsOpen)
+            {
+                serialPort1.Close();
+                this.connectButton.Text = "Connect";
+            }
+            else {
+                Form connectionDetails = new Form();
+                connectionDetails.Height = 300;
+                connectionDetails.Width = 300;
+                connectionDetails.Text = "Connection Details";
 
-            Label comportInputLabel = new Label() { Top = 20, Left = 20, Text = "Comport" };
-            TextBox comportInput = new TextBox() { Top = 20, Left = 120 };
+                Label comportInputLabel = new Label() { Top = 20, Left = 20, Text = "Comport" };
+                TextBox comportInput = new TextBox() { Top = 20, Left = 120 };
 
-            Label baudInputLabel = new Label() { Top = 50, Left = 20, Text = "Baud" };
-            TextBox baudInput = new TextBox() { Top = 50, Left = 120 };
+                Label baudInputLabel = new Label() { Top = 50, Left = 20, Text = "Baud" };
+                TextBox baudInput = new TextBox() { Top = 50, Left = 120 };
 
-            Label parityInputLabel = new Label() { Top = 80, Left = 20, Text = "Parity" };
-            TextBox parityInput = new TextBox() { Top = 80, Left = 120 };
+                Label parityInputLabel = new Label() { Top = 80, Left = 20, Text = "Parity" };
+                TextBox parityInput = new TextBox() { Top = 80, Left = 120 };
 
-            Label stopBitInputLabel = new Label() { Top = 110, Left = 20, Text = "Stop Bit" };
-            TextBox stopBitInput = new TextBox() { Top = 110, Left = 120 };
+                Label stopBitInputLabel = new Label() { Top = 110, Left = 20, Text = "Stop Bit" };
+                TextBox stopBitInput = new TextBox() { Top = 110, Left = 120 };
 
-            Button promptOK = new Button() { Text = "OK", Top = 200, Left = 120 };
-            Button promptCancel = new Button() { Text = "Cancel", Top = 200, Left = 200 };
+                Button promptOK = new Button() { Text = "OK", Top = 200, Left = 120 };
+                Button promptCancel = new Button() { Text = "Cancel", Top = 200, Left = 200 };
 
-            string comport, parity, baud, stopBit;
-            promptOK.Click += (sender1, e1) => {
-                comport = comportInput.Text;
-                parity = parityInput.Text;
-                baud = baudInput.Text;
-                stopBit = stopBitInput.Text;
+                string comport, parity, baud, stopBit;
+                promptOK.Click += (sender1, e1) => {
+                    comport = comportInput.Text;
+                    parity = parityInput.Text;
+                    baud = baudInput.Text;
+                    stopBit = stopBitInput.Text;
 
-                int errorStatus = verifySerialCommSettingInput(comport, baud, parity, stopBit);
+                    int errorStatus = verifySerialCommSettingInput(comport, baud, parity, stopBit);
 
-                if (errorStatus != 100)
-                {
-                    MessageBox.Show(humanReadableErrorMessage(errorStatus));
-                }
-                else
-                {
-                    Parity par = Parity.None;
-                    if (parity.Trim() == "odd")
+                    if (errorStatus != 100)
                     {
-                        par = Parity.Odd;
+                        MessageBox.Show(humanReadableErrorMessage(errorStatus));
                     }
-                    else if (parity.Trim() == "even")
+                    else
                     {
-                        par = Parity.Even;
-                    }
-                    comport = "COM" + comport.Trim();
-                    StopBits stopB = StopBits.None;
-                    if (stopBit.Trim() == "1")
-                    {
-                        stopB = StopBits.One;
-                    }
-                    else if (stopBit.Trim() == "2")
-                    {
-                        stopB = StopBits.Two;
+                        Parity par = Parity.None;
+                        if (parity.Trim() == "odd")
+                        {
+                            par = Parity.Odd;
+                        }
+                        else if (parity.Trim() == "even")
+                        {
+                            par = Parity.Even;
+                        }
+                        comport = "COM" + comport.Trim();
+                        StopBits stopB = StopBits.None;
+                        if (stopBit.Trim() == "1")
+                        {
+                            stopB = StopBits.One;
+                        }
+                        else if (stopBit.Trim() == "2")
+                        {
+                            stopB = StopBits.Two;
+                        }
+
+                        serialPort1.BaudRate = Int32.Parse(baud);
+                        serialPort1.Parity = par;
+                        serialPort1.StopBits = stopB;
+
+                        updateCommDetailMainForm();
+
+                        connectionDetails.Close();
                     }
 
-                    serialPort1.BaudRate = Int32.Parse(baud);
-                    serialPort1.Parity = par;
-                    serialPort1.StopBits = stopB;
-
+                };
+                promptCancel.Click += (sender1, e1) => {
                     connectionDetails.Close();
-                }
+                };
+                connectionDetails.Controls.Add(comportInputLabel);
+                connectionDetails.Controls.Add(comportInput);
+                connectionDetails.Controls.Add(baudInput);
+                connectionDetails.Controls.Add(baudInputLabel);
+                connectionDetails.Controls.Add(parityInput);
+                connectionDetails.Controls.Add(parityInputLabel);
+                connectionDetails.Controls.Add(stopBitInputLabel);
+                connectionDetails.Controls.Add(stopBitInput);
+                connectionDetails.Controls.Add(promptOK);
+                connectionDetails.Controls.Add(promptCancel);
+                connectionDetails.ShowDialog();
 
-            };
-            promptCancel.Click += (sender1, e1) => {
-                connectionDetails.Close();
-            };
-            connectionDetails.Controls.Add(comportInputLabel);
-            connectionDetails.Controls.Add(comportInput);
-            connectionDetails.Controls.Add(baudInput);
-            connectionDetails.Controls.Add(baudInputLabel);
-            connectionDetails.Controls.Add(parityInput);
-            connectionDetails.Controls.Add(parityInputLabel);
-            connectionDetails.Controls.Add(stopBitInputLabel);
-            connectionDetails.Controls.Add(stopBitInput);
-            connectionDetails.Controls.Add(promptOK);
-            connectionDetails.Controls.Add(promptCancel);
-            connectionDetails.ShowDialog();
-
-
-
-
+            }
         }
-
 
         private int verifySerialCommSettingInput(string comport, string baud, string parity, string stopBit)
         {
@@ -138,6 +145,8 @@ namespace FRM_SerialSet
             return 100;
         }
         #endregion
+
+        #region Error Message Handling
         private string humanReadableErrorMessage(int errorCode)
         {
             if (errorCode == 150)
@@ -154,7 +163,7 @@ namespace FRM_SerialSet
             }
             return "No Error Found!";
         }
-
+        #endregion
 
 
 
@@ -164,13 +173,45 @@ namespace FRM_SerialSet
 
         }
 
+        
         private void generateCommCode_Click(object sender, EventArgs e)
         {
             String startReadLocation = this.NameInput.Text;
             String readRangeInput = this.readDataRange.Text;
             SerialComm mySerialCode = new SerialComm(startReadLocation, readRangeInput);
+            globalSerialCode = mySerialCode;
             this.generatedCommCodeLabel.Text = mySerialCode.result();
             this.generatedCommCodeLabel.BorderStyle = BorderStyle.FixedSingle;
+            
+        }
+
+        private void updateCommDetailMainForm()
+        {
+            this.comportLabel.Text = serialPort1.PortName;
+            this.baudLabel.Text = serialPort1.BaudRate.ToString();
+            this.parityLabel.Text = serialPort1.Parity.ToString();
+            this.stopBitLabel.Text = serialPort1.StopBits.ToString();
+
+            if (globalSerialCode.result() == "@00RD*\n")
+            {
+                MessageBox.Show("You did not create a Serial Code yet.");
+            }
+            else
+            {
+                try
+                {
+                    serialPort1.Open();
+                    this.connectButton.Text = "Disconnect";
+                    serialPort1.Write(globalSerialCode.result());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
+                
+            }
+
             
         }
     }
@@ -193,6 +234,13 @@ namespace FRM_SerialSet
         public bool Fuse
         {
             get { return fuse; }
+        }
+
+        public SerialComm()
+        {
+            this.startPosition = "";
+            this.positionCount = "";
+            this.FCS = "";
         }
 
         public SerialComm(string startPosition, string positionCount)

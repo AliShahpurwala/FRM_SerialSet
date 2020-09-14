@@ -38,6 +38,10 @@
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.generateCommCode = new System.Windows.Forms.Button();
             this.generatedCommCodeLabel = new System.Windows.Forms.Label();
+            this.comportLabel = new System.Windows.Forms.Label();
+            this.baudLabel = new System.Windows.Forms.Label();
+            this.parityLabel = new System.Windows.Forms.Label();
+            this.stopBitLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // NameInput
@@ -112,11 +116,51 @@
             this.generatedCommCodeLabel.TabIndex = 7;
             this.generatedCommCodeLabel.UseMnemonic = false;
             // 
+            // comportLabel
+            // 
+            this.comportLabel.AutoSize = true;
+            this.comportLabel.Location = new System.Drawing.Point(347, 46);
+            this.comportLabel.Name = "comportLabel";
+            this.comportLabel.Size = new System.Drawing.Size(35, 13);
+            this.comportLabel.TabIndex = 8;
+            this.comportLabel.Text = "label1";
+            // 
+            // baudLabel
+            // 
+            this.baudLabel.AutoSize = true;
+            this.baudLabel.Location = new System.Drawing.Point(347, 79);
+            this.baudLabel.Name = "baudLabel";
+            this.baudLabel.Size = new System.Drawing.Size(35, 13);
+            this.baudLabel.TabIndex = 9;
+            this.baudLabel.Text = "label1";
+            // 
+            // parityLabel
+            // 
+            this.parityLabel.AutoSize = true;
+            this.parityLabel.Location = new System.Drawing.Point(347, 109);
+            this.parityLabel.Name = "parityLabel";
+            this.parityLabel.Size = new System.Drawing.Size(35, 13);
+            this.parityLabel.TabIndex = 10;
+            this.parityLabel.Text = "label1";
+            // 
+            // stopBitLabel
+            // 
+            this.stopBitLabel.AutoSize = true;
+            this.stopBitLabel.Location = new System.Drawing.Point(347, 139);
+            this.stopBitLabel.Name = "stopBitLabel";
+            this.stopBitLabel.Size = new System.Drawing.Size(35, 13);
+            this.stopBitLabel.TabIndex = 11;
+            this.stopBitLabel.Text = "label1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.stopBitLabel);
+            this.Controls.Add(this.parityLabel);
+            this.Controls.Add(this.baudLabel);
+            this.Controls.Add(this.comportLabel);
             this.Controls.Add(this.generatedCommCodeLabel);
             this.Controls.Add(this.generateCommCode);
             this.Controls.Add(this.connectButton);
@@ -144,6 +188,10 @@
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button generateCommCode;
         private System.Windows.Forms.Label generatedCommCodeLabel;
+        private System.Windows.Forms.Label comportLabel;
+        private System.Windows.Forms.Label baudLabel;
+        private System.Windows.Forms.Label parityLabel;
+        private System.Windows.Forms.Label stopBitLabel;
     }
 }
 
