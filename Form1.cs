@@ -71,14 +71,19 @@ namespace FRM_SerialSet
 
                 String[] availableComports = SerialPort.GetPortNames();
                 comportInput.Items.AddRange(availableComports);
-                // TextBox comportInput = new TextBox() { Top = 20, Left = 120 };
-
 
                 Label baudInputLabel = new Label() { Top = 50, Left = 20, Text = "Baud" };
                 TextBox baudInput = new TextBox() { Top = 50, Left = 120 };
 
                 Label parityInputLabel = new Label() { Top = 80, Left = 20, Text = "Parity" };
-                TextBox parityInput = new TextBox() { Top = 80, Left = 120 };
+                ComboBox parityInput = new ComboBox() { Top = 80, Left = 120 };
+                parityInput.DropDownStyle = ComboBoxStyle.DropDownList;
+
+
+                // Adding list items in the parityInput Drop Down
+                String[] validParity = { "Odd", "Even", "None"};
+                parityInput.Items.AddRange(validParity);
+
 
                 Label stopBitInputLabel = new Label() { Top = 110, Left = 20, Text = "Stop Bit" };
                 TextBox stopBitInput = new TextBox() { Top = 110, Left = 120 };
