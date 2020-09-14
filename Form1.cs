@@ -64,7 +64,15 @@ namespace FRM_SerialSet
                 connectionDetails.Text = "Connection Details";
 
                 Label comportInputLabel = new Label() { Top = 20, Left = 20, Text = "Comport" };
-                TextBox comportInput = new TextBox() { Top = 20, Left = 120 };
+                ComboBox comportInput = new ComboBox() { Top = 20, Left = 120 };
+                comportInput.DropDownStyle = ComboBoxStyle.DropDownList;
+
+                // Adding list items in the comportInput Drop Down
+
+                String[] availableComports = SerialPort.GetPortNames();
+                comportInput.Items.AddRange(availableComports);
+                // TextBox comportInput = new TextBox() { Top = 20, Left = 120 };
+
 
                 Label baudInputLabel = new Label() { Top = 50, Left = 20, Text = "Baud" };
                 TextBox baudInput = new TextBox() { Top = 50, Left = 120 };
@@ -103,7 +111,7 @@ namespace FRM_SerialSet
                         {
                             par = Parity.Even;
                         }
-                        comport = "COM" + comport.Trim();
+                        
                         StopBits stopB = StopBits.None;
                         if (stopBit.Trim() == "1")
                         {
@@ -145,12 +153,6 @@ namespace FRM_SerialSet
 
         private int verifySerialCommSettingInput(string comport, string baud, string parity, string stopBit)
         {
-
-            comport = comport.Trim();
-            if (comport != "1" && comport != "2" && comport != "3")
-            {
-                return 200;
-            }
             parity = parity.Trim();
             if (parity.ToLower() != "odd" && parity.ToLower() != "even")
             {
