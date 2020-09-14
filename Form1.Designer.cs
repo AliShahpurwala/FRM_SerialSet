@@ -122,36 +122,36 @@
             this.comportLabel.AutoSize = true;
             this.comportLabel.Location = new System.Drawing.Point(347, 46);
             this.comportLabel.Name = "comportLabel";
-            this.comportLabel.Size = new System.Drawing.Size(35, 13);
+            this.comportLabel.Size = new System.Drawing.Size(52, 13);
             this.comportLabel.TabIndex = 8;
-            this.comportLabel.Text = "label1";
+            this.comportLabel.Text = "Comport: ";
             // 
             // baudLabel
             // 
             this.baudLabel.AutoSize = true;
             this.baudLabel.Location = new System.Drawing.Point(347, 79);
             this.baudLabel.Name = "baudLabel";
-            this.baudLabel.Size = new System.Drawing.Size(35, 13);
+            this.baudLabel.Size = new System.Drawing.Size(64, 13);
             this.baudLabel.TabIndex = 9;
-            this.baudLabel.Text = "label1";
+            this.baudLabel.Text = "Baud Rate: ";
             // 
             // parityLabel
             // 
             this.parityLabel.AutoSize = true;
             this.parityLabel.Location = new System.Drawing.Point(347, 109);
             this.parityLabel.Name = "parityLabel";
-            this.parityLabel.Size = new System.Drawing.Size(35, 13);
+            this.parityLabel.Size = new System.Drawing.Size(39, 13);
             this.parityLabel.TabIndex = 10;
-            this.parityLabel.Text = "label1";
+            this.parityLabel.Text = "Parity: ";
             // 
             // stopBitLabel
             // 
             this.stopBitLabel.AutoSize = true;
             this.stopBitLabel.Location = new System.Drawing.Point(347, 139);
             this.stopBitLabel.Name = "stopBitLabel";
-            this.stopBitLabel.Size = new System.Drawing.Size(35, 13);
+            this.stopBitLabel.Size = new System.Drawing.Size(49, 13);
             this.stopBitLabel.TabIndex = 11;
-            this.stopBitLabel.Text = "label1";
+            this.stopBitLabel.Text = "Stop Bits";
             // 
             // connectionProgressBar
             // 
