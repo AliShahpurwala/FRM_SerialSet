@@ -88,7 +88,14 @@ namespace FRM_SerialSet
 
 
                 Label stopBitInputLabel = new Label() { Top = 110, Left = 20, Text = "Stop Bit" };
-                TextBox stopBitInput = new TextBox() { Top = 110, Left = 120 };
+                ComboBox stopBitInput = new ComboBox() { Top = 110, Left = 120 };
+                stopBitInput.DropDownStyle = ComboBoxStyle.DropDownList;
+
+                // Adding list items in the stopBitInput Drop Down
+                String[] validStopBits = { "None", "One", "Two" };
+                stopBitInput.Items.AddRange(validStopBits);
+
+                //TextBox stopBitInput = new TextBox() { Top = 110, Left = 120 };
 
                 Button promptOK = new Button() { Text = "OK", Top = 200, Left = 120 };
                 Button promptCancel = new Button() { Text = "Cancel", Top = 200, Left = 200 };
@@ -124,13 +131,17 @@ namespace FRM_SerialSet
                         }
                         
                         StopBits stopB = StopBits.None;
-                        if (stopBit.Trim() == "1")
+                        if (stopBit.Trim() == "One")
                         {
                             stopB = StopBits.One;
                         }
-                        else if (stopBit.Trim() == "2")
+                        else if (stopBit.Trim() == "Two")
                         {
                             stopB = StopBits.Two;
+                        }
+                        else if (stopBit.Trim() == "None")
+                        {
+                            stopB = StopBits.None;
                         }
 
                         serialPort1.BaudRate = Int32.Parse(baud);
@@ -164,16 +175,7 @@ namespace FRM_SerialSet
 
         private int verifySerialCommSettingInput(string comport, string baud, string parity, string stopBit)
         {
-            parity = parity.Trim();
-            if (parity.ToLower() != "odd" && parity.ToLower() != "even" && parity.ToLower() != "none")
-            {
-                return 150;
-            }
-            stopBit = stopBit.Trim();
-            if (stopBit != "1" && stopBit != "2" && stopBit != "3")
-            {
-                return 250;
-            }
+            
             return 100;
         }
         #endregion
