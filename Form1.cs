@@ -226,7 +226,7 @@ namespace FRM_SerialSet
             {
                 serialPort1.Open();
                 this.connectButton.Text = "Disconnect";
-                serialPort1.Write(globalSerialCode.result());
+                
             }
             catch (Exception ex)
             {
