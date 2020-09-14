@@ -42,7 +42,8 @@ namespace FRM_SerialSet
                 serialPort1.Close();
                 this.connectButton.Text = "Connect";
             }
-            else {
+            else
+            {
                 Form connectionDetails = new Form();
                 connectionDetails.Height = 300;
                 connectionDetails.Width = 300;
@@ -64,7 +65,8 @@ namespace FRM_SerialSet
                 Button promptCancel = new Button() { Text = "Cancel", Top = 200, Left = 200 };
 
                 string comport, parity, baud, stopBit;
-                promptOK.Click += (sender1, e1) => {
+                promptOK.Click += (sender1, e1) =>
+                {
                     comport = comportInput.Text;
                     parity = parityInput.Text;
                     baud = baudInput.Text;
@@ -108,7 +110,8 @@ namespace FRM_SerialSet
                     }
 
                 };
-                promptCancel.Click += (sender1, e1) => {
+                promptCancel.Click += (sender1, e1) =>
+                {
                     connectionDetails.Close();
                 };
                 connectionDetails.Controls.Add(comportInputLabel);
@@ -128,7 +131,7 @@ namespace FRM_SerialSet
 
         private int verifySerialCommSettingInput(string comport, string baud, string parity, string stopBit)
         {
-            
+
             comport = comport.Trim();
             if (comport != "1" && comport != "2" && comport != "3")
             {
@@ -175,7 +178,7 @@ namespace FRM_SerialSet
 
         }
 
-        
+
         private void generateCommCode_Click(object sender, EventArgs e)
         {
             String startReadLocation = this.NameInput.Text;
@@ -184,7 +187,7 @@ namespace FRM_SerialSet
             globalSerialCode = mySerialCode;
             this.generatedCommCodeLabel.Text = mySerialCode.result();
             this.generatedCommCodeLabel.BorderStyle = BorderStyle.FixedSingle;
-            
+
         }
 
         private void updateCommDetailMainForm()
@@ -194,27 +197,18 @@ namespace FRM_SerialSet
             this.parityLabel.Text = serialPort1.Parity.ToString();
             this.stopBitLabel.Text = serialPort1.StopBits.ToString();
 
-            if (globalSerialCode.result() == "@00RD*\n")
+            try
             {
-                MessageBox.Show("You did not create a Serial Code yet.");
+                serialPort1.Open();
+                this.connectButton.Text = "Disconnect";
+                serialPort1.Write(globalSerialCode.result());
             }
-            else
+            catch (Exception ex)
             {
-                try
-                {
-                    serialPort1.Open();
-                    this.connectButton.Text = "Disconnect";
-                    serialPort1.Write(globalSerialCode.result());
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-
-                
+                MessageBox.Show(ex.ToString());
             }
 
-            
+
         }
     }
 
