@@ -21,6 +21,8 @@ namespace FRM_SerialSet
 
         SerialComm globalSerialCode = new SerialComm();
 
+
+
         private void OK_Click(object sender, EventArgs e)
         {
             String givenName = this.NameInput.Text;
