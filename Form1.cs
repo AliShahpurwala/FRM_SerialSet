@@ -55,6 +55,8 @@ namespace FRM_SerialSet
             {
                 serialPort1.Close();
                 this.connectButton.Text = "Connect";
+                this.connectionProgressBar.Value = 0;
+                
             }
             else
             {
@@ -233,7 +235,7 @@ namespace FRM_SerialSet
                 MessageBox.Show(ex.ToString());
             }
 
-
+            this.connectionProgressBar.Value = 100;
         }
     }
 

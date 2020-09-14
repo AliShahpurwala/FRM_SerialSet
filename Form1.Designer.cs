@@ -42,6 +42,7 @@
             this.baudLabel = new System.Windows.Forms.Label();
             this.parityLabel = new System.Windows.Forms.Label();
             this.stopBitLabel = new System.Windows.Forms.Label();
+            this.connectionProgressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // NameInput
@@ -152,11 +153,19 @@
             this.stopBitLabel.TabIndex = 11;
             this.stopBitLabel.Text = "label1";
             // 
+            // connectionProgressBar
+            // 
+            this.connectionProgressBar.Location = new System.Drawing.Point(567, 83);
+            this.connectionProgressBar.Name = "connectionProgressBar";
+            this.connectionProgressBar.Size = new System.Drawing.Size(127, 26);
+            this.connectionProgressBar.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.connectionProgressBar);
             this.Controls.Add(this.stopBitLabel);
             this.Controls.Add(this.parityLabel);
             this.Controls.Add(this.baudLabel);
@@ -192,6 +201,7 @@
         private System.Windows.Forms.Label baudLabel;
         private System.Windows.Forms.Label parityLabel;
         private System.Windows.Forms.Label stopBitLabel;
+        private System.Windows.Forms.ProgressBar connectionProgressBar;
     }
 }
 
